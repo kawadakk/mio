@@ -1,4 +1,6 @@
 use std::ops::{Deref, DerefMut};
+#[cfg(target_os = "solid_asp3")]
+use std::os::solid::io::AsRawFd;
 #[cfg(unix)]
 use std::os::unix::io::AsRawFd;
 #[cfg(target_os = "wasi")]
@@ -129,7 +131,7 @@ impl<T> DerefMut for IoSource<T> {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 impl<T> event::Source for IoSource<T>
 where
     T: AsRawFd,
