@@ -11,6 +11,8 @@
 #![cfg_attr(test, deny(warnings))]
 // Disallow warnings in examples.
 #![doc(test(attr(deny(warnings))))]
+// Raw FD acess in Tier 3 target
+#![cfg_attr(target_os = "solid_asp3", feature(solid_ext))]
 
 //! Mio is a fast, low-level I/O library for Rust focusing on non-blocking APIs
 //! and event notification for building high performance I/O apps with as little

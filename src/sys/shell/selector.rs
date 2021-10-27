@@ -1,4 +1,6 @@
 use std::io;
+#[cfg(target_os = "solid_asp3")]
+use std::os::solid::io::{AsRawFd, RawFd};
 #[cfg(unix)]
 use std::os::unix::io::{AsRawFd, RawFd};
 use std::time::Duration;
@@ -25,7 +27,7 @@ impl Selector {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 cfg_any_os_ext! {
     use crate::{Interest, Token};
 
@@ -53,7 +55,7 @@ cfg_io_source! {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 impl AsRawFd for Selector {
     fn as_raw_fd(&self) -> RawFd {
         os_required!()

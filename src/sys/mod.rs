@@ -63,6 +63,12 @@ cfg_os_poll! {
     pub use self::windows::*;
 }
 
+#[cfg(target_os = "solid_asp3")]
+cfg_os_poll! {
+    mod solid;
+    pub(crate) use self::solid::*;
+}
+
 cfg_not_os_poll! {
     mod shell;
     pub(crate) use self::shell::*;

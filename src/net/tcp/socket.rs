@@ -1,6 +1,8 @@
 use std::io;
 use std::mem;
 use std::net::SocketAddr;
+#[cfg(target_os = "solid_asp3")]
+use std::os::solid::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 #[cfg(unix)]
 use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 #[cfg(windows)]
@@ -33,6 +35,7 @@ pub struct TcpKeepalive {
         target_os = "freebsd",
         target_os = "netbsd",
         target_os = "windows",
+        target_os = "solid_asp3"
     ))]
     pub(crate) interval: Option<Duration>,
     #[cfg(any(
@@ -41,6 +44,7 @@ pub struct TcpKeepalive {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_os = "solid_asp3"
     ))]
     pub(crate) retries: Option<u32>,
 }
@@ -279,6 +283,7 @@ impl TcpSocket {
             target_os = "ios",
             target_os = "freebsd",
             target_os = "netbsd",
+            target_os = "solid_asp3"
         )))
     )]
     #[cfg(any(
@@ -287,6 +292,7 @@ impl TcpSocket {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_os = "solid_asp3"
     ))]
     pub fn get_keepalive_interval(&self) -> io::Result<Option<Duration>> {
         sys::tcp::get_keepalive_interval(self.sys)
@@ -308,6 +314,7 @@ impl TcpSocket {
             target_os = "ios",
             target_os = "freebsd",
             target_os = "netbsd",
+            target_os = "solid_asp3"
         )))
     )]
     #[cfg(any(
@@ -316,6 +323,7 @@ impl TcpSocket {
         target_os = "ios",
         target_os = "freebsd",
         target_os = "netbsd",
+        target_os = "solid_asp3"
     ))]
     pub fn get_keepalive_retries(&self) -> io::Result<Option<u32>> {
         sys::tcp::get_keepalive_retries(self.sys)
@@ -335,7 +343,7 @@ impl Drop for TcpSocket {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 impl IntoRawFd for TcpSocket {
     fn into_raw_fd(self) -> RawFd {
         let ret = self.sys;
@@ -345,14 +353,14 @@ impl IntoRawFd for TcpSocket {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 impl AsRawFd for TcpSocket {
     fn as_raw_fd(&self) -> RawFd {
         self.sys
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 impl FromRawFd for TcpSocket {
     /// Converts a `RawFd` to a `TcpSocket`.
     ///

@@ -91,6 +91,7 @@ pub(crate) fn set_keepalive_params(_: TcpSocket, _: TcpKeepalive) -> io::Result<
     target_os = "freebsd",
     target_os = "netbsd",
     target_os = "solaris",
+    target_os = "solid_asp3",
 ))]
 pub(crate) fn get_keepalive_time(_: TcpSocket) -> io::Result<Option<Duration>> {
     os_required!()
@@ -102,6 +103,7 @@ pub(crate) fn get_keepalive_time(_: TcpSocket) -> io::Result<Option<Duration>> {
     target_os = "ios",
     target_os = "freebsd",
     target_os = "netbsd",
+    target_os = "solid_asp3",
 ))]
 pub(crate) fn get_keepalive_interval(_: TcpSocket) -> io::Result<Option<Duration>> {
     os_required!()
@@ -113,6 +115,7 @@ pub(crate) fn get_keepalive_interval(_: TcpSocket) -> io::Result<Option<Duration
     target_os = "ios",
     target_os = "freebsd",
     target_os = "netbsd",
+    target_os = "solid_asp3",
 ))]
 pub(crate) fn get_keepalive_retries(_: TcpSocket) -> io::Result<Option<u32>> {
     os_required!()

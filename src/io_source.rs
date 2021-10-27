@@ -1,4 +1,6 @@
 use std::ops::{Deref, DerefMut};
+#[cfg(target_os = "solid_asp3")]
+use std::os::solid::io::AsRawFd;
 #[cfg(unix)]
 use std::os::unix::io::AsRawFd;
 #[cfg(windows)]
@@ -7,7 +9,7 @@ use std::os::windows::io::AsRawSocket;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::{fmt, io};
 
-#[cfg(any(unix, debug_assertions))]
+#[cfg(any(unix, target_os = "solid_asp3", debug_assertions))]
 use crate::poll;
 use crate::sys::IoSourceState;
 use crate::{event, Interest, Registry, Token};
@@ -102,6 +104,7 @@ impl<T> IoSource<T> {
     /// [`deregister`] it.
     ///
     /// [`deregister`]: Registry::deregister
+    #[cfg(any(unix, target_os = "solid_asp3"))]
     pub fn into_inner(self) -> T {
         self.inner
     }
@@ -129,7 +132,7 @@ impl<T> DerefMut for IoSource<T> {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 impl<T> event::Source for IoSource<T>
 where
     T: AsRawFd,
