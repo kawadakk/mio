@@ -104,7 +104,6 @@ impl<T> IoSource<T> {
     /// [`deregister`] it.
     ///
     /// [`deregister`]: Registry::deregister
-    #[cfg(any(unix, target_os = "solid_asp3"))]
     pub fn into_inner(self) -> T {
         self.inner
     }
