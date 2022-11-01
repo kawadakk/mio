@@ -85,7 +85,7 @@ impl TcpStream {
     #[cfg(not(target_os = "wasi"))]
     pub fn connect(addr: SocketAddr) -> io::Result<TcpStream> {
         let socket = new_for_addr(addr)?;
-        #[cfg(unix)]
+        #[cfg(any(unix, target_os = "solid_asp3"))]
         let stream = unsafe { TcpStream::from_raw_fd(socket) };
         #[cfg(windows)]
         let stream = unsafe { TcpStream::from_raw_socket(socket as _) };

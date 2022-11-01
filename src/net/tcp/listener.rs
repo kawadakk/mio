@@ -11,7 +11,7 @@ use std::{fmt, io};
 
 use crate::io_source::IoSource;
 use crate::net::TcpStream;
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "solid_asp3"))]
 use crate::sys::tcp::set_reuseaddr;
 #[cfg(not(target_os = "wasi"))]
 use crate::sys::tcp::{bind, listen, new_for_addr};
@@ -60,7 +60,7 @@ impl TcpListener {
     #[cfg(not(target_os = "wasi"))]
     pub fn bind(addr: SocketAddr) -> io::Result<TcpListener> {
         let socket = new_for_addr(addr)?;
-        #[cfg(unix)]
+        #[cfg(any(unix, target_os = "solid_asp3"))]
         let listener = unsafe { TcpListener::from_raw_fd(socket) };
         #[cfg(windows)]
         let listener = unsafe { TcpListener::from_raw_socket(socket as _) };
