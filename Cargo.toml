@@ -4,14 +4,14 @@ name = "mio"
 # When releasing to crates.io:
 # - Update CHANGELOG.md.
 # - Create git tag
-version       = "0.8.5"
+version       = "0.8.6"
 license       = "MIT"
 authors       = [
   "Carl Lerche <me@carllerche.com>",
   "Thomas de Zeeuw <thomasdezeeuw@gmail.com>",
   "Tokio Contributors <team@tokio.rs>",
 ]
-description   = "Lightweight non-blocking IO"
+description   = "Lightweight non-blocking I/O."
 homepage      = "https://github.com/tokio-rs/mio"
 repository    = "https://github.com/tokio-rs/mio"
 readme        = "README.md"
@@ -52,7 +52,7 @@ libc = "0.2.121"
 libc = "0.2.121"
 
 [target.'cfg(windows)'.dependencies.windows-sys]
-version = "0.42"
+version = "0.45"
 features = [
   "Win32_Foundation",                 # Basic types eg HANDLE
   "Win32_Networking_WinSock",         # winsock2 types/functions
