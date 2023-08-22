@@ -3,7 +3,6 @@ use crate::{
     Interest, Token,
 };
 
-use log::error;
 use std::os::solid::io::{AsRawFd, RawFd};
 #[cfg(debug_assertions)]
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
