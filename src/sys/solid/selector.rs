@@ -46,7 +46,17 @@ impl Selector {
 
     pub fn select(&self, events: &mut Events, timeout: Option<Duration>) -> io::Result<()> {
         let timeout = timeout
-            .map(|to| cmp::min(to.as_millis(), abi::c_int::MAX as u128) as abi::c_int)
+            .map(|to| {
+                // `Duration::as_millis` truncates, so round up. This avoids
+                // turning sub-millisecond timeouts into a zero timeout, unless
+                // the caller explicitly requests that by specifying a zero
+                // timeout.
+                let to_ms = to
+                    .checked_add(Duration::from_nanos(999_999))
+                    .unwrap_or(to)
+                    .as_millis();
+                cmp::min(to_ms, abi::c_int::MAX as u128) as abi::c_int
+            })
             .unwrap_or(-1);
 
         events.clear();
